@@ -1,0 +1,70 @@
+<header style="position: sticky; top: 0; z-index: 1">
+  <navbar>
+    <div style="background-color: black; padding: 10px 0px">
+      <ul
+        style="list-style: none; display: flex; justify-content: space-between"
+      >
+        <li style="padding: 0 5%;">
+          <a
+            style="color: white; text-decoration: none; font-weight: bold"
+            href="/products"
+          >Products</a>
+        </li>
+        <li style="padding: 0 5%;">
+          <a
+            style="color: white; text-decoration: none; font-weight: bold"
+            href="/realTimeProducts"
+          >RealTime</a>
+        </li>
+        <li style="padding: 0 5%;">
+          <a
+            style="color: white; text-decoration: none; font-weight: bold"
+            href="/chat"
+          >Chat</a>
+        </li>
+        <li style="padding: 0 5%;">
+              <a
+                style="color: white; text-decoration: none; font-weight: bold; display: flex"
+                href="/carts"
+              >Cart</a>
+            </li>
+        <li style="padding: 0 5%;">
+          <a
+            style="color: white; text-decoration: none; font-weight: bold"
+            href="/users/logout"
+          >Log out</a>
+        </li>
+      </ul>
+    </div>
+  </navbar>
+</header>
+
+<h1>Bienvenido {{userName}} a nuestros productos! 😎</h1>
+
+{{#if products.length}}
+  <section class="productsContainer">
+    {{#each products}}
+      <div class="productsCard">
+        <h3>Nombre: {{title}}</h3>
+        <h4>Descripcion: {{description}}</h4>
+        <h4>Precio: {{price}}</h4>
+        <img src="{{thumbnail}}" />
+        <div class="buttons">
+          <button
+            onclick="deleteProduct('{{../cartId}}','{{_id}}')"
+            class="minusButton"
+          >-</button>
+          <button
+            onclick="addProduct('{{../cartId}}','{{_id}}')"
+            class="plusButton"
+          >+</button>
+        </div>
+      </div>
+    {{/each}}
+  </section>
+{{else}}
+  <h3>Error cargando los productos, por favor intente recargar la pagina 🔃</h3>
+{{/if}}
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/products.js"></script>

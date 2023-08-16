@@ -1,0 +1,75 @@
+h1,
+h2,
+h3 {
+  text-align: center;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Estilos para los productos */
+.productsContainer {
+  display: grid;
+  grid-template-columns: 33vw 33vw 33vw; /* Tres tarjetas por fila */
+  gap: 10px;
+  justify-items: center;
+}
+
+.productsCard {
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 5px;
+  width: 300px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: space-between;
+}
+
+.productsCard h3 {
+  font-size: 1rem;
+  margin-top: 0;
+}
+
+.productsCard h4 {
+  font-size: 0.9rem;
+  margin: 5px 0;
+}
+
+.productsCard img {
+  max-width: 100%;
+  max-height: 150px;
+  object-fit: contain;
+  margin: 5px auto;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.minusButton,
+.plusButton {
+  border: none;
+  background-color: #007bff;
+  width: 25px;
+  color: #ffffff;
+  font-size: 0.9rem;
+  padding: 3px 6px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.minusButton {
+  background-color: #dc3545;
+}

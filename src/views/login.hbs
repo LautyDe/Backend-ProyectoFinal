@@ -1,0 +1,25 @@
+<h1>LOGIN</h1>
+<form action="/users/login" method="post">
+  Email:
+  <input type="email" name="email" id="email" />
+  Password:
+  <input type="password" name="password" id="password" />
+  <input type="submit" value="Ingresar" />
+</form>
+
+<div class="forgotPassword">
+  <h3>Recover your Password</h3>
+  <button onclick="location.href='/recoverPage'">RECOVER PASS</button>
+</div>
+
+<div class="gitHubLogin">
+  <h2>Login with GitHub!</h2>
+  <button onclick="location.href='/users/registerGitHub'">GITHUB</button>
+</div>
+
+<div class="newUser">
+  <h2 class="newUserH2">Usuario nuevo?</h2>
+  <button onclick="location.href='/register'">Ir a registro</button>
+</div>
+
+<script src="/css/login.css"></script>

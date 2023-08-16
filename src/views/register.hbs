@@ -1,0 +1,16 @@
+<h1>Register</h1>
+
+<form action="/users/register" method="post">
+  First name:<input type="text" name="first_name" id="first_name" />
+  Last name:<input type="text" name="last_name" id="last_name" />
+  Email:
+  <input type="email" name="email" id="email" />
+  Age:
+  <input type="number" name="age" id="age" />
+  Password:
+  <input type="password" name="password" id="password" />
+  <input type="submit" value="Create" />
+</form>
+
+<h2>Sign up with GitHub!</h2>
+<button onclick="location.href='/users/registerGitHub'">GITHUB</button>

@@ -1,0 +1,8 @@
+<h2>Change your Password</h2>
+
+<h4>Please, enter your new Password</h4>
+<form action="/users/changePass" method="post">
+  <input type="hidden" name="uid" value="{{uid}}" />
+  <input type="password" name="password" id="password" required />
+  <input type="submit" value="SEND" />
+</form>

@@ -1,0 +1,43 @@
+h1,
+h2 {
+  text-align: center;
+}
+
+.finish {
+  color: white;
+  text-decoration: none;
+  background-color: black;
+  padding: 8px;
+  border-radius: 15px;
+}
+
+.img {
+  width: 60px;
+  height: 60px;
+}
+
+.cartProduct {
+  display: grid;
+  grid-template-columns: 20vw 20vw 20vw 20vw 20vw;
+  justify-items: center;
+  align-items: center;
+}
+
+.plusButton {
+  background-color: rgb(56, 144, 56);
+  width: 28px;
+  height: 28px;
+  text-align: center;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.minusButton {
+  background-color: red;
+  width: 28px;
+  height: 28px;
+  text-align: center;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+}

@@ -1,0 +1,22 @@
+h1,
+h2 {
+  text-align: center;
+}
+
+.chatContainer {
+  text-align: center;
+}
+
+.message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.messageUser {
+  font-weight: bold;
+}
+
+.messageText {
+  margin: 0 10px;
+}

@@ -1,0 +1,66 @@
+<header style="position: sticky; top: 0; z-index: 1">
+      <navbar>
+        <div style="background-color: black; padding: 10px 0px">
+          <ul
+            style="list-style: none; display: flex; justify-content: space-between"
+          >
+            <li style="padding: 0 5%;">
+              <a
+                style="color: white; text-decoration: none; font-weight: bold"
+                href="/products"
+              >Products</a>
+            </li>
+            <li style="padding: 0 5%;">
+              <a
+                style="color: white; text-decoration: none; font-weight: bold"
+                href="/realTimeProducts"
+              >RealTime</a>
+            </li>
+            <li style="padding: 0 5%;">
+              <a
+                style="color: white; text-decoration: none; font-weight: bold"
+                href="/chat"
+              >Chat</a>
+            </li>
+            <li style="padding: 0 5%;">
+              <a
+                style="color: white; text-decoration: none; font-weight: bold; display: flex"
+                href="/carts"
+              >Cart</a>
+            </li>
+            <li style="padding: 0 5%;">
+              <a
+                style="color: white; text-decoration: none; font-weight: bold"
+                href="/users/logout"
+              >Log out</a>
+            </li>
+          </ul>
+        </div>
+      </navbar>
+    </header>
+
+<h1>Productos en tiempo real 🤯</h1>
+
+<section id="productsContainer"></section>
+
+<h2>Agregar producto 👀</h2>
+
+<div class="formContainer">
+<form id="formAddProduct">
+  <input type="text" id="title" name="title" placeholder="Title" />
+  <input
+    type="text"
+    id="description"
+    name="description"
+    placeholder="Description"
+  />
+  <input type="number" id="price" name="price" placeholder="Price" />
+  <input type="text" id="thumbnail" name="thumbnail" placeholder="Thumbnail" />
+  <input type="text" id="category" name="category" placeholder="Category" />
+  <input type="number" id="stock" name="stock" placeholder="Stock" />
+  <input class="button" type="button" value="Agregar" onclick="addProduct()"></input>
+</form>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/realTimeProducts.js"></script>

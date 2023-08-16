@@ -1,0 +1,20 @@
+h1,
+h2 {
+  text-align: center;
+}
+
+.img {
+  width: 60px;
+  height: 60px;
+}
+
+.product {
+  display: grid;
+  grid-template-columns: 14vw 14vw 14vw 14vw 14vw 14vw 14vw;
+  align-items: center;
+  justify-items: center;
+}
+
+.formContainer {
+  text-align: center;
+}
