@@ -49,19 +49,17 @@ class AuthMiddleware {
     }
   }
 
-  async authRoles(roles) {
+  authRoles(roles) {
     return function (req, res, next) {
       if (!req.user) {
-        CustomError.createCustomError({
-          message: ErrorMessage.SESSION_EXPIRED,
-          status: 401,
-        });
+        res.status(401).json("Session expired");
         return;
       }
-      if (roles.icludes(req.user.role)) {
-        next();
+      if (roles.includes(req.user.role)) {
+        return next();
       } else {
         res.status(403).end();
+        return;
       }
     };
   }

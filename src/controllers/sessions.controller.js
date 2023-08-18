@@ -1,3 +1,4 @@
+import UserCurrentDTO from "../DAL/DTOs/userCurrent.dto.js";
 import CustomError from "../services/errors/CustomError.js";
 import { ErrorMessage } from "../services/errors/error.enum.js";
 
@@ -10,8 +11,9 @@ class SessionController {
           status: 401,
         });
       }
-      const userLogin = req.user;
-      res.json(userLogin);
+      const userCurrentDto = new UserCurrentDTO(req.user);
+      console.log(userCurrentDto);
+      res.json(userCurrentDto);
     } catch (error) {
       next(error);
     }

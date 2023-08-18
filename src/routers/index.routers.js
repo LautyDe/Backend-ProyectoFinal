@@ -14,7 +14,7 @@ router.use("/test/mockProducts", mockProducts);
 router.use("/users", users);
 router.use("/api/products", products);
 router.use("/api/carts", carts);
-router.use("/currentSession", currentSession);
+router.use("/api/sessions/current", currentSession);
 router.use("/loggerTest", loggerTest);
 
 export default router;

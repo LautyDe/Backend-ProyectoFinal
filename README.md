@@ -1,4 +1,4 @@
-# Entrega 10 - Proyecto Final - Lautaro Demonte
+Proyecto Final - Lautaro Demonte
 
 ## Configuracion
 
