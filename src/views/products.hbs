@@ -10,12 +10,14 @@
             href="/products"
           >Products</a>
         </li>
+        {{#if isAdmin}}
         <li style="padding: 0 5%;">
           <a
             style="color: white; text-decoration: none; font-weight: bold"
             href="/realTimeProducts"
           >RealTime</a>
         </li>
+        {{/if}}
         <li style="padding: 0 5%;">
           <a
             style="color: white; text-decoration: none; font-weight: bold"
@@ -49,6 +51,7 @@
         <h4>Descripcion: {{description}}</h4>
         <h4>Precio: {{price}}</h4>
         <img src="{{thumbnail}}" />
+        {{#unless ../isAdmin}}
         <div class="buttons">
           <button
             onclick="deleteProduct('{{../cartId}}','{{_id}}')"
@@ -59,6 +62,7 @@
             class="plusButton"
           >+</button>
         </div>
+        {{/unless}}
       </div>
     {{/each}}
   </section>

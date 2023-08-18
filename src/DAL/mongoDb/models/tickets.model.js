@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
+import { codeGenerator } from "../../../utils.js";
 
 const ticketsSchema = new mongoose.Schema({
   code: {
-    type: mongoose.SchemaTypes.ObjectId,
-    default: new mongoose.Types.ObjectId(),
+    type: String,
     required: true,
   },
   purchase_datetime: { type: Date, default: Date.now, required: true },

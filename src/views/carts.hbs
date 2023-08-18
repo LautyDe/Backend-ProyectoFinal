@@ -10,12 +10,14 @@
             href="/products"
           >Products</a>
         </li>
-        <li style="padding: 0 5%;">
-          <a
-            style="color: white; text-decoration: none; font-weight: bold"
-            href="/realTimeProducts"
-          >RealTime</a>
-        </li>
+        {{#if isAdmin}}
+          <li style="padding: 0 5%;">
+            <a
+              style="color: white; text-decoration: none; font-weight: bold"
+              href="/realTimeProducts"
+            >RealTime</a>
+          </li>
+        {{/if}}
         <li style="padding: 0 5%;">
           <a
             style="color: white; text-decoration: none; font-weight: bold"
@@ -26,7 +28,7 @@
           <a
             style="color: white; text-decoration: none; font-weight: bold; display: flex"
             href="/carts"
-          >Cart
+          >Cart</a>
         </li>
         <li style="padding: 0 5%;">
           <a
@@ -40,9 +42,16 @@
 </header>
 
 {{#if products.length}}
-<h1>Bienvenido al carrito 🛒</h1>
+  <h1>Bienvenido al carrito 🛒</h1>
 
-<table class='table' id='table' cellPadding='10' border='1' align='center' data-cart-id='{{cartId}}'>
+  <table
+    class="table"
+    id="table"
+    cellPadding="10"
+    border="1"
+    align="center"
+    data-cart-id="{{cartId}}"
+  >
     <thead>
       <tr>
         <th>Product Name</th>
@@ -54,36 +63,39 @@
         <th>Delete</th>
       </tr>
     </thead>
-    <tbody id='cartTable'>
+    <tbody id="cartTable">
       {{#each products}}
         <tr>
           <td>{{title}}</td>
           <td>{{quantity}}</td>
           <td>{{price}}</td>
           <td>{{stock}}</td>
-          <td align='center'><button
-              class='increase'
-              data-product-id='{{productId}}'
-              data-quantity='{{quantity}}'
-              data-stock='{{stock}}'
+          <td align="center"><button
+              class="increase"
+              data-product-id="{{productId}}"
+              data-quantity="{{quantity}}"
+              data-stock="{{stock}}"
             >+</button></td>
-          <td align='center'><button
-              class='decrease'
-              data-product-id='{{productId}}'
-              data-quantity='{{quantity}}'
+          <td align="center"><button
+              class="decrease"
+              data-product-id="{{productId}}"
+              data-quantity="{{quantity}}"
             >-</button></td>
-          <td align='center'><button class='delete' data-product-id='{{productId}}'>Delete</button></td>
+          <td align="center"><button
+              class="delete"
+              data-product-id="{{productId}}"
+            >Delete</button></td>
         </tr>
       {{/each}}
     </tbody>
     <tfoot>
       <tr>
-        <td colspan='5' align='center'>
+        <td colspan="5" align="center">
           <b>Cart Total $</b>
           {{cartTotal}}
         </td>
-        <td colspan='2' align='center'>
-          <button class='purchase'>Purchase</button>
+        <td colspan="2" align="center">
+          <button class="purchase">Purchase</button>
         </td>
       </tr>
     </tfoot>
@@ -93,11 +105,10 @@
 {{/if}}
 <br />
 <br />
-<div style='text-align: center'>
-  <form action='/register/logout' method='post'>
-    <button type='submit'>LOGOUT</button>
+<div style="text-align: center">
+  <form action="/register/logout" method="post">
+    <button type="submit">LOGOUT</button>
   </form>
 </div>
-
 
 <script src="/js/carts.js"></script>

@@ -24,6 +24,11 @@ class CartsService {
     return response;
   }
 
+  async deleteProductFromCart(cid, pid) {
+    const cart = await cartManager.deleteProductFromCart(cid, pid);
+    return cart;
+  }
+
   async deleteAllProducts(cid) {
     const response = await cartManager.deleteAllProducts(cid);
     return response;

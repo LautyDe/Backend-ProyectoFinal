@@ -9,11 +9,7 @@ router.get("/", productsController.getAll);
 
 router.get("/:pid", productsController.getProductById);
 
-router.post(
-  "/",
-  authMiddleware.authRoles([config.role_admin, config.role_premium]),
-  productsController.addProduct
-);
+router.post("/", productsController.addProduct);
 
 router.put("/:pid", productsController.updateProduct);
 

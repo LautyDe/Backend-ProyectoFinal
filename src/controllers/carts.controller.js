@@ -144,6 +144,24 @@ class CartsController {
     }
   }
 
+  async deleteProductFromCart(req, res, next) {
+    try {
+      const { cid, pid } = req.params;
+      const cart = await cartsService.findById(cid);
+      if (!cart) {
+        CustomError.createCustomError({
+          message: ErrorMessage.CART_NOT_FOUND,
+          status: 404,
+          cause: error.message,
+        });
+      }
+      const newCart = await cartsService.deleteProductFromCart(cid, pid);
+      res.status(200).json(newCart);
+    } catch (error) {
+      next(error);
+    }
+  }
+
   async purchase(req, res, next) {
     try {
       const { cid } = req.params;

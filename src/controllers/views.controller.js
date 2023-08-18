@@ -29,6 +29,7 @@ class ViewsController {
       next(error);
     }
   }
+
   async register(req, res, next) {
     try {
       res.render("register");
@@ -36,6 +37,7 @@ class ViewsController {
       next(error);
     }
   }
+
   async registerOk(req, res, next) {
     try {
       res.render("registerOk");
@@ -43,6 +45,7 @@ class ViewsController {
       next(error);
     }
   }
+
   async registerError(req, res, next) {
     try {
       res.render("registerError");
@@ -50,6 +53,15 @@ class ViewsController {
       next(error);
     }
   }
+
+  async sessionExpired(req, res, next) {
+    try {
+      res.render("sessionExpired");
+    } catch (error) {
+      next(error);
+    }
+  }
+
   async logout(req, res, next) {
     try {
       req.session.destroy(err => {
@@ -69,6 +81,7 @@ class ViewsController {
 
   async products(req, res, next) {
     try {
+      const admin = res.locals.isAdmin;
       const usersCartId = req.user.cart.toString();
       const products = await productsService.findAll();
       const productsToString = products.map(product => ({
@@ -82,6 +95,7 @@ class ViewsController {
         products: productsToString,
         userName: userName,
         cartId: usersCartId,
+        isAdmin: admin,
       });
     } catch (error) {
       next(error);
@@ -90,7 +104,6 @@ class ViewsController {
 
   async realTimeProducts(req, res, next) {
     try {
-      const usersCartId = req.user.cart.toString();
       const products = await productsService.findAll();
       res.render("realTimeProducts", {
         style: "realTimeProducts.css",
@@ -104,22 +117,26 @@ class ViewsController {
 
   async chat(req, res, next) {
     try {
-      const usersCartId = req.user.cart.toString();
+      const admin = res.locals.isAdmin;
+      const user = res.locals.isUser;
       const messages = await chatService.findAllMessages();
       res.render("chat", {
         style: "chat.css",
         title: "Chat",
         messages: messages,
+        isAdmin: admin,
+        isUser: user,
       });
     } catch (error) {
       next(error);
     }
   }
+
   async carts(req, res, next) {
     try {
+      const admin = res.locals.isAdmin;
       const usersCart = req.user._doc.cart.toString();
       const cart = await cartsService.findById(usersCart);
-      const usersCartId = req.user.cart.toString();
       cart.products.forEach(
         item => (item.total = item.quantity * item.product.price)
       );
@@ -135,6 +152,7 @@ class ViewsController {
           stock: item.product.stock,
         })),
         cartTotal: cart.products.reduce((acc, curr) => (acc += curr.total), 0),
+        isAdmin: admin,
       });
     } catch (error) {
       next(error);

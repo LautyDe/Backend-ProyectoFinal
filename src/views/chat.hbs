@@ -1,46 +1,49 @@
 <header style="position: sticky; top: 0; z-index: 1">
-      <navbar>
-        <div style="background-color: black; padding: 10px 0px">
-          <ul
+  <navbar>
+    <div style="background-color: black; padding: 10px 0px">
+      <ul
             style="list-style: none; display: flex; justify-content: space-between"
-          >
-            <li style="padding: 0 5%;">
-              <a
-                style="color: white; text-decoration: none; font-weight: bold"
-                href="/products"
-              >Products</a>
-            </li>
-            <li style="padding: 0 5%;">
-              <a
-                style="color: white; text-decoration: none; font-weight: bold"
-                href="/realTimeProducts"
-              >RealTime</a>
-            </li>
-            <li style="padding: 0 5%;">
-              <a
-                style="color: white; text-decoration: none; font-weight: bold"
-                href="/chat"
-              >Chat</a>
-            </li>
-            <li style="padding: 0 5%;">
-              <a
-                style="color: white; text-decoration: none; font-weight: bold; display: flex"
-                href="/carts"
-              >Cart</a>
-            </li>
-            <li style="padding: 0 5%;">
-              <a
-                style="color: white; text-decoration: none; font-weight: bold"
-                href="/users/logout"
-              >Log out</a>
-            </li>
-          </ul>
-        </div>
-      </navbar>
-    </header>
+      >
+        <li style="padding: 0 5%;">
+          <a
+            style="color: white; text-decoration: none; font-weight: bold"
+            href="/products"
+          >Products</a>
+        </li>
+        {{#if isAdmin}}
+        <li style="padding: 0 5%;">
+          <a
+            style="color: white; text-decoration: none; font-weight: bold"
+            href="/realTimeProducts"
+          >RealTime</a>
+        </li>
+        {{/if}}
+        <li style="padding: 0 5%;">
+          <a
+            style="color: white; text-decoration: none; font-weight: bold"
+            href="/chat"
+          >Chat</a>
+        </li>
+        <li style="padding: 0 5%;">
+          <a
+            style="color: white; text-decoration: none; font-weight: bold; display: flex"
+            href="/carts"
+          >Cart</a>
+        </li>
+        <li style="padding: 0 5%;">
+          <a
+            style="color: white; text-decoration: none; font-weight: bold"
+            href="/users/logout"
+          >Log out</a>
+        </li>
+      </ul>
+    </div>
+  </navbar>
+</header>
 
 <h1>Chat</h1>
 <section class="chatContainer">
+  {{#if isUser}}
   <div >
     <form id="addMessageForm">
       <input type="email" id="user" placeholder="Ingrese su email" />
@@ -48,6 +51,9 @@
       <input class="button" type="button" value="Enviar" onclick="addMessage()"></input>
     </form>
   </div>
+  {{else}}
+  <h2>Solo los usuarios pueden escribir en el chat ⛔</h2>
+  {{/if}}
   
   <div id="messages" class="allMessages"></div>
 </section>

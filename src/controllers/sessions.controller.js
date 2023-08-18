@@ -12,7 +12,6 @@ class SessionController {
         });
       }
       const userCurrentDto = new UserCurrentDTO(req.user);
-      console.log(userCurrentDto);
       res.json(userCurrentDto);
     } catch (error) {
       next(error);

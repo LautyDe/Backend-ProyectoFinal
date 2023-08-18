@@ -11,11 +11,34 @@ router.get("/register", viewsController.register);
 router.get("/registerOk", viewsController.registerOk);
 router.get("/registerError", viewsController.registerError);
 router.get("/logout", viewsController.logout);
-router.get("/products", viewsController.products);
-router.get("/realtimeproducts", viewsController.realTimeProducts);
-router.get("/chat", authMiddleware.authUser, viewsController.chat);
-router.get("/carts", viewsController.carts);
+router.get(
+  "/products",
+  authMiddleware.sessionExpired,
+  authMiddleware.authAdmin,
+  authMiddleware.authUser,
+  viewsController.products
+);
+router.get(
+  "/realtimeproducts",
+  authMiddleware.sessionExpired,
+  authMiddleware.authAdmin,
+  viewsController.realTimeProducts
+);
+router.get(
+  "/chat",
+  authMiddleware.sessionExpired,
+  authMiddleware.authAdmin,
+  authMiddleware.authUser,
+  viewsController.chat
+);
+router.get(
+  "/carts",
+  authMiddleware.sessionExpired,
+  authMiddleware.authAdmin,
+  viewsController.carts
+);
 router.get("/recoverPage", recoveryController.recoverPage);
 router.get("/changePassPage", recoveryController.changePassPage);
+router.get("/sessionExpired", viewsController.sessionExpired);
 
 export default router;

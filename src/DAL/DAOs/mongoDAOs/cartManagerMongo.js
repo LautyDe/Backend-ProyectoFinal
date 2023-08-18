@@ -51,6 +51,13 @@ export default class CartManager {
     }
   }
 
+  async deleteProductFromCart(cid, pid) {
+    const cart = await cartsModel.findById(cid);
+    cart.products = cart.products.filter(({ product }) => !product.equals(pid));
+    await cart.save();
+    return cart;
+  }
+
   async deleteAllProducts(cid) {
     const cart = await cartsModel.findOneAndUpdate(
       { _id: cid },

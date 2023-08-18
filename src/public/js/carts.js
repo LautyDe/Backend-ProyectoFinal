@@ -7,9 +7,12 @@ cartTable?.addEventListener("click", async e => {
   const productId = element.getAttribute("data-product-id");
   if (element.className === "delete") {
     try {
-      const response = await fetch(`/api/carts/${cartId}`, {
-        method: "DELETE",
-      });
+      const response = await fetch(
+        `/api/carts/${cartId}/product/${productId}`,
+        {
+          method: "DELETE",
+        }
+      );
       if (response.ok) {
         document.location.reload();
       } else {
@@ -51,7 +54,7 @@ cartTable?.addEventListener("click", async e => {
       const response = await fetch(
         `/api/carts/${cartId}/product/${productId}`,
         {
-          method: "DELETE",
+          method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ quantity: quantity - 1 }),
         }
