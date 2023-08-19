@@ -178,10 +178,12 @@ class CartsController {
           status: 404,
         });
       }
-      const result = await cartsService.purchaseCart(cart._id, req.user);
-      console.log("result", result);
+      const result = await cartsService.purchaseCart(
+        cart._id.toString(),
+        req.user
+      );
       const mail = {
-        from: "coderhousemailer@gmail.com",
+        from: "lauty.d.p@gmail.com",
         to: req.user.email,
         subject: "Purchase succesfuly",
         text: `${req.user.name} your purchase was succesfully. Your id: ${result.ticket.code}. Total price: ${result.ticket.amount}`,

@@ -70,7 +70,7 @@ cartTable?.addEventListener("click", async e => {
   } else if (element.className === "purchase") {
     try {
       const response = await fetch(`/api/carts/${cartId}/purchase`, {
-        method: "GET",
+        method: "POST",
       });
       if (response.ok) {
         alert("Purchase complete!!!");

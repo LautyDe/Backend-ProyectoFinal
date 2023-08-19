@@ -41,15 +41,15 @@
   </navbar>
 </header>
 
-<h1>Bienvenido {{userName}} a nuestros productos! 😎</h1>
+<h1>Welcome {{userName}} to our products! 😎</h1>
 
 {{#if products.length}}
   <section class="productsContainer">
     {{#each products}}
       <div class="productsCard">
-        <h3>Nombre: {{title}}</h3>
-        <h4>Descripcion: {{description}}</h4>
-        <h4>Precio: {{price}}</h4>
+        <h3>Title: {{title}}</h3>
+        <h4>Description: {{description}}</h4>
+        <h4>Price: {{price}}</h4>
         <img src="{{thumbnail}}" />
         {{#unless ../isAdmin}}
         <div class="buttons">
@@ -67,7 +67,7 @@
     {{/each}}
   </section>
 {{else}}
-  <h3>Error cargando los productos, por favor intente recargar la pagina 🔃</h3>
+  <h3>Error loading our products, please try reloading the page  🔃</h3>
 {{/if}}
 
 <script src="/socket.io/socket.io.js"></script>
