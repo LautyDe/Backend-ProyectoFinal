@@ -1,7 +1,4 @@
 import config from "../config.js";
-import CustomError from "../services/errors/CustomError.js";
-import { ErrorMessage } from "../services/errors/error.enum.js";
-import { productsService } from "../services/products.service.js";
 
 class AuthMiddleware {
   sessionExpired(req, res, next) {
@@ -13,23 +10,18 @@ class AuthMiddleware {
   }
 
   authAdmin(req, res, next) {
-    if (req.user.role === config.role_admin) {
-      res.locals.isAdmin = true;
-      next();
-    } else {
-      res.locals.isAdmin = false;
-      next();
-    }
+    res.locals.isAdmin = req.user.role === config.role_admin;
+    next();
   }
 
   authUser(req, res, next) {
-    if (req.user.role === config.role_user) {
-      res.locals.isUser = true;
-      next();
-    } else {
-      res.locals.isUser = false;
-      next();
-    }
+    res.locals.isUser = req.user.role === config.role_user;
+    next();
+  }
+
+  authPremium(req, res, next) {
+    res.locals.isPremium = req.user.role === config.role_premium;
+    next();
   }
 }
 

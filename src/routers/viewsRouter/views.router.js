@@ -15,19 +15,21 @@ router.get(
   "/products",
   authMiddleware.sessionExpired,
   authMiddleware.authAdmin,
-  authMiddleware.authUser,
+  authMiddleware.authPremium,
   viewsController.products
 );
 router.get(
   "/realtimeproducts",
   authMiddleware.sessionExpired,
   authMiddleware.authAdmin,
+  authMiddleware.authPremium,
   viewsController.realTimeProducts
 );
 router.get(
   "/chat",
   authMiddleware.sessionExpired,
   authMiddleware.authAdmin,
+  authMiddleware.authPremium,
   authMiddleware.authUser,
   viewsController.chat
 );
@@ -35,6 +37,7 @@ router.get(
   "/carts",
   authMiddleware.sessionExpired,
   authMiddleware.authAdmin,
+  authMiddleware.authPremium,
   viewsController.carts
 );
 router.get("/recoverPage", recoveryController.recoverPage);

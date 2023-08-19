@@ -1,6 +1,7 @@
 import { Router } from "express";
 import passport from "passport";
 import { recoveryController } from "../controllers/recovery.controller.js";
+import { usersController } from "../controllers/users.controller.js";
 
 const router = Router();
 
@@ -38,5 +39,6 @@ router.get("/recoverPage", recoveryController.recoverPage);
 router.get("/changePassPage", recoveryController.changePassPage);
 router.post("/recover", recoveryController.recover);
 router.post("/changePass", recoveryController.changePass);
+router.get("/premium/:uid", usersController.togglePremium);
 
 export default router;

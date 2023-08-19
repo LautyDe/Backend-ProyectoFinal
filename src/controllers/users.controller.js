@@ -9,20 +9,31 @@ class UsersController {
     try {
       const { uid } = req.params;
       if (!mongoose.Types.ObjectId.isValid(uid)) {
-        throw CustomError.createCustomError({
+        CustomError.createCustomError({
           message: ErrorMessage.INVALID_USER_ID,
           status: 400,
         });
       }
       const user = await usersManager.findById(uid);
+      if (!user) {
+        CustomError.createCustomError({
+          message: ErrorMessage.USER_NOT_FOUND,
+          status: 404,
+        });
+      }
       if (user.role === config.role_admin) {
         CustomError.createCustomError({
           message: "Admin cannot be premium",
           status: 400,
         });
       }
-      user.role =
-        user.role === config.role_user ? config.role_premium : config.role_user;
+
+      if (user.role === config.role_user) {
+        user.role = config.role_premium;
+      } else {
+        user.role = config.role_user;
+      }
+
       await user.save();
       res.json(user);
     } catch (error) {

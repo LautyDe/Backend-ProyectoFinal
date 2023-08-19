@@ -12,7 +12,13 @@ import { ErrorMessage } from "../services/errors/error.enum.js";
    not found: 404
    internal server error: 500
     */
-
+function buildUserData(res) {
+  return {
+    isAdmin: res.locals.isAdmin,
+    isPremium: res.locals.isPremium,
+    canShowRealtime: res.locals.isPremium || res.locals.isAdmin,
+  };
+}
 class ViewsController {
   async login(req, res, next) {
     try {
@@ -81,7 +87,6 @@ class ViewsController {
 
   async products(req, res, next) {
     try {
-      const admin = res.locals.isAdmin;
       const usersCartId = req.user.cart.toString();
       const products = await productsService.findAll();
       const productsToString = products.map(product => ({
@@ -89,14 +94,15 @@ class ViewsController {
         _id: product._id.toString(),
       }));
       const userName = req.user.name;
-      res.render("products", {
+      const renderData = {
         style: "products.css",
         title: "Products",
         products: productsToString,
         userName: userName,
         cartId: usersCartId,
-        isAdmin: admin,
-      });
+        ...buildUserData(res),
+      };
+      res.render("products", renderData);
     } catch (error) {
       next(error);
     }
@@ -105,11 +111,12 @@ class ViewsController {
   async realTimeProducts(req, res, next) {
     try {
       const products = await productsService.findAll();
-      res.render("realTimeProducts", {
+      const renderData = {
         style: "realTimeProducts.css",
         title: "Real Time Products",
         products: products,
-      });
+      };
+      res.render("realTimeProducts", renderData);
     } catch (error) {
       next(error);
     }
@@ -117,15 +124,12 @@ class ViewsController {
 
   async chat(req, res, next) {
     try {
-      const admin = res.locals.isAdmin;
-      const user = res.locals.isUser;
       const messages = await chatService.findAllMessages();
       res.render("chat", {
         style: "chat.css",
         title: "Chat",
         messages: messages,
-        isAdmin: admin,
-        isUser: user,
+        ...buildUserData(res),
       });
     } catch (error) {
       next(error);
@@ -134,7 +138,6 @@ class ViewsController {
 
   async carts(req, res, next) {
     try {
-      const admin = res.locals.isAdmin;
       const usersCart = req.user._doc.cart.toString();
       const cart = await cartsService.findById(usersCart);
       cart.products.forEach(
@@ -152,7 +155,7 @@ class ViewsController {
           stock: item.product.stock,
         })),
         cartTotal: cart.products.reduce((acc, curr) => (acc += curr.total), 0),
-        isAdmin: admin,
+        ...buildUserData(res),
       });
     } catch (error) {
       next(error);
