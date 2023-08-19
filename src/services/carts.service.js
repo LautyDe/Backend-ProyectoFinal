@@ -1,9 +1,8 @@
 import { cartManager } from "../DAL/DAOs/mongoDAOs/cartManagerMongo.js";
-import ProductForTicketDTO from "../DAL/DTOs/productForTicket.dto.js";
-import TicketDTO from "../DAL/DTOs/ticket.dto.js";
+import { ticketManager } from "../DAL/DAOs/mongoDAOs/ticketManagerMongo.js";
 import { cartsModel } from "../DAL/mongoDb/models/carts.model.js";
 import { productsModel } from "../DAL/mongoDb/models/products.model.js";
-import { ticketsModel } from "../DAL/mongoDb/models/tickets.model.js";
+import { codeGenerator } from "../utils.js";
 import CustomError from "./errors/CustomError.js";
 import { ErrorMessage } from "./errors/error.enum.js";
 
@@ -56,11 +55,12 @@ class CartsService {
           product.stock -= cartProduct.quantity;
           await product.save();
           amount += product.price * cartProduct.quantity;
-          const productItem = new ProductForTicketDTO(
-            product,
-            cartProduct.quantity
-          );
+          const productItem = {
+            _id: product.id,
+            quantity: cartProduct.quantity,
+          };
           productsForTicket.push(productItem);
+          console.log("PFT", productsForTicket);
         } else {
           productsWithoutStock.push(product._id.toString());
         }
@@ -69,16 +69,16 @@ class CartsService {
         productsWithoutStock.includes(product.product._id.toString())
       );
       await cart.save();
-      console.log(productsForTicket);
 
-      const firstTicket = {
+      const cleanTicket = {
+        code: codeGenerator(),
         amount,
         purchaser: user.email,
         products: productsForTicket,
       };
-      const ticketDto = new TicketDTO(firstTicket);
-      const ticket = await ticketsModel.create(ticketDto);
-      console.log(ticket);
+      console.log("cleanTicket", cleanTicket);
+      const ticket = await ticketManager.createTicket(cleanTicket);
+      console.log("ticket", ticket);
       return { ticket, productsWithoutStock };
     } catch (error) {
       return error;

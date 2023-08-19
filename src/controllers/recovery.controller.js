@@ -89,7 +89,7 @@ class RecoveryController {
     //send mail with options
     let mail = {
       from: "CODERHOUSE ECOMMERCE",
-      to: "lauty.d.p@gmail.com",
+      to: email,
       subject: "Test",
       context: {
         name: user.name,

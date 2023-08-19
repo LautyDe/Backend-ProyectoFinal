@@ -13,10 +13,8 @@ const ticketsSchema = new mongoose.Schema({
       product: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Products",
-        required: true,
       },
-      quantity: { type: Number, required: true },
-      _id: false,
+      quantity: { type: Number },
     },
     { _id: false },
   ],

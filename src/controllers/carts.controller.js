@@ -186,8 +186,7 @@ class CartsController {
         from: "lauty.d.p@gmail.com",
         to: req.user.email,
         subject: "Purchase succesfuly",
-        text: `${req.user.name} your purchase was succesfully. Your id: ${result.ticket.code}. Total price: ${result.ticket.amount}`,
-        template: "purchase",
+        text: `${req.user.name} your purchase was succesfully. Your ticket id: ${result.ticket.code}. Total price: ${result.ticket.amount}`,
       };
       transporter.sendMail(mail, (error, info) => {
         if (error) {
