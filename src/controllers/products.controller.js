@@ -91,9 +91,7 @@ class ProductsController {
   async addProduct(req, res, next) {
     try {
       const product = req.body;
-      console.log("product en addProduct", product);
       const addedProduct = await productsService.addProduct(product);
-      console.log("added product", addedProduct);
       res.status(201).json(addedProduct);
     } catch (error) {
       console.log("error en log de addProduct", error);

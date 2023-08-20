@@ -1,0 +1,224 @@
+paths:
+  /api/products:
+    get:
+      summary: Get all products
+      responses:
+        "200":
+          description: All products found
+        "500":
+          description: Server error
+      tags:
+        - Products
+    post:
+      summary: Add a new product
+      tags:
+        - Products
+      requestBody:
+        description: Product information
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProductInput"
+      responses:
+        "201":
+          description: Product added
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+              example: |
+                {
+                  "id": "6431d960adccf268a6734b24",
+                  "code": "abc123",
+                  "status": true,
+                  "title": "New Product",
+                  "description": "A brand new product",
+                  "price": 150,
+                  "thumbnail": "https://example.com/new-product.jpg",
+                  "category": "New Category",
+                  "stock": 10,
+                  "owner": "admin"
+                }
+        "500":
+          description: Server error
+
+  /api/products/{id}:
+    get:
+      summary: Get one product by id
+      tags:
+        - Products
+      parameters:
+        - name: id
+          in: path
+          description: Product identifier
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Product found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+              example: |
+                {
+                  "id": "6431d960adccf268a6734b23",
+                  "code": "miux4Ijkrypt1KG",
+                  "status": true,
+                  "title": "Joystick PS5",
+                  "description": "Joystick para PS5",
+                  "price": 25000,
+                  "thumbnail": "https://images.fravega.com/f1000/a23c2e9cbe114eca833fc5f7288457fc.jpg",
+                  "category": "Gaming",
+                  "stock": 14,
+                  "owner": "admin"
+                }
+        "500":
+          description: Server error
+    put:
+      summary: Update a product by id
+      tags:
+        - Products
+      parameters:
+        - name: id
+          in: path
+          description: Product identifier
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Update product information by sending the key/value properties you want to update
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties:
+                type: string # Value to update
+      responses:
+        "200":
+          description: Product updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+              example: |
+                {
+                  "id": "6431d960adccf268a6734b23",
+                  "code": "miux4Ijkrypt1KG",
+                  "status": true,
+                  "title": "Updated Joystick",
+                  "description": "Updated Joystick for PS5",
+                  "price": 28000,
+                  "thumbnail": "https://images.fravega.com/f1000/updated.jpg",
+                  "category": "Gaming",
+                  "stock": 15,
+                  "owner": "admin"
+                }
+        "400":
+          description: Invalid product id
+        "404":
+          description: Product not found
+    delete:
+      summary: Delete a product by id
+      tags:
+        - Products
+      parameters:
+        - name: id
+          in: path
+          description: Product identifier
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Product deleted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+              example: |
+                {
+                  "id": "6431d960adccf268a6734b23",
+                  "code": "miux4Ijkrypt1KG",
+                  "status": true,
+                  "title": "Deleted Joystick",
+                  "description": "Deleted Joystick for PS5",
+                  "price": 25000,
+                  "thumbnail": "https://images.fravega.com/f1000/deleted.jpg",
+                  "category": "Gaming",
+                  "stock": 0,
+                  "owner": "admin"
+                }
+        "400":
+          description: Invalid product id
+        "404":
+          description: Product not found
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        id:
+          type: string
+        code:
+          type: string
+        status:
+          type: boolean
+        title:
+          type: string
+        description:
+          type: string
+        price:
+          type: number
+        thumbnail:
+          type: string
+        category:
+          type: string
+        stock:
+          type: number
+        owner:
+          type: string
+      example: |
+        {
+          "id": "6431d960adccf268a6734b23",
+          "code": "miux4Ijkrypt1KG",
+          "status": true,
+          "title": "Joystick PS5",
+          "description": "Joystick para PS5",
+          "price": 25000,
+          "thumbnail": "https://images.fravega.com/f1000/a23c2e9cbe114eca833fc5f7288457fc.jpg",
+          "category": "Gaming",
+          "stock": 14,
+          "owner": "admin"
+        }
+
+    ProductInput:
+      type: object
+      required:
+        - title
+        - description
+        - price
+        - stock
+        - category
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        price:
+          type: number
+        stock:
+          type: number
+        category:
+          type: string
+      example: |
+        {
+          "title": "New Product",
+          "description": "A brand new product",
+          "price": 150,
+          "stock": 10,
+          "category": "New Category"
+        }
