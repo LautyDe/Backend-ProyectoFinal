@@ -1,6 +1,6 @@
 const socketClient = io();
 const user = owner.value;
-console.log(user);
+const userRole = role.value;
 
 socketClient.on("products", data => {
   render(data);
@@ -10,9 +10,7 @@ function render(data) {
   const html = data
     .map(item => {
       const deleteButtonVisibility =
-        user === item.owner || user === "lauty.d.p@gmail.com"
-          ? "block"
-          : "none";
+        user === item.owner || userRole === "admin" ? "block" : "none";
       return `<div class="product">
       <div>${item.title}</div>
       <div>${item.description}</div>
@@ -61,6 +59,7 @@ function addProduct() {
   const price = document.getElementById("price").value;
   const stock = document.getElementById("stock").value;
   const productOwner = document.getElementById("owner").value;
+  const userRole = document.getElementById("role").value;
   const product = {
     title: document.getElementById("title").value,
     description: document.getElementById("description").value,
@@ -69,6 +68,7 @@ function addProduct() {
     category: document.getElementById("category").value,
     stock: parseInt(stock),
     owner: productOwner,
+    role: userRole,
   };
   socketClient.emit("newProduct", product);
   const form = document.getElementById("formAddProduct");
