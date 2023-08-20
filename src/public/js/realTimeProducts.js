@@ -1,6 +1,6 @@
 const socketClient = io();
-const productOwner = owner.value;
-console.log(productOwner);
+const user = owner.value;
+console.log(user);
 
 socketClient.on("products", data => {
   render(data);
@@ -10,7 +10,9 @@ function render(data) {
   const html = data
     .map(item => {
       const deleteButtonVisibility =
-        item.owner === productOwner ? "block" : "none";
+        user === item.owner || user === "lauty.d.p@gmail.com"
+          ? "block"
+          : "none";
       return `<div class="product">
       <div>${item.title}</div>
       <div>${item.description}</div>
