@@ -5,6 +5,7 @@ import handlebars from "express-handlebars";
 import { Server } from "socket.io";
 import cookieParser from "cookie-parser";
 import compression from "express-compression";
+import swaggerUi from "swagger-ui-express";
 //locals
 import config from "./src/config.js";
 import indexRouters from "./src/routers/index.routers.js";
@@ -13,10 +14,10 @@ import { productsService } from "./src/services/products.service.js";
 import { chatService } from "./src/services/chat.service.js";
 import { cartsService } from "./src/services/carts.service.js";
 import { errorMiddleware } from "./src/services/errors/error.middleware.js";
+import { swaggerSetup } from "./swaggerSpecs.js";
 //db
 import "./src/DAL/mongoDb/dbConfig.js";
 import mongoStore from "connect-mongo";
-
 //passport
 import passport from "passport";
 import "./src/strategies/index.strategies.js";
@@ -63,6 +64,9 @@ app.engine(
 );
 app.set("views", __dirname + "/views");
 app.set("view engine", "hbs");
+
+//docs
+app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerSetup));
 
 /* routers */
 app.use("/", indexRouters);
