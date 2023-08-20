@@ -29,7 +29,7 @@ paths:
                 $ref: "#/components/schemas/Product"
               example: |
                 {
-                  "id": "6431d960adccf268a6734b24",
+                  "_id": "6431d960adccf268a6734b24",
                   "code": "abc123",
                   "status": true,
                   "title": "New Product",
@@ -43,13 +43,13 @@ paths:
         "500":
           description: Server error
 
-  /api/products/{id}:
+  /api/products/{pid}:
     get:
       summary: Get one product by id
       tags:
         - Products
       parameters:
-        - name: id
+        - name: pid
           in: path
           description: Product identifier
           required: true
@@ -64,7 +64,7 @@ paths:
                 $ref: "#/components/schemas/Product"
               example: |
                 {
-                  "id": "6431d960adccf268a6734b23",
+                  "_id": "6431d960adccf268a6734b23",
                   "code": "miux4Ijkrypt1KG",
                   "status": true,
                   "title": "Joystick PS5",
@@ -82,7 +82,7 @@ paths:
       tags:
         - Products
       parameters:
-        - name: id
+        - name: pid
           in: path
           description: Product identifier
           required: true
@@ -106,7 +106,7 @@ paths:
                 $ref: "#/components/schemas/Product"
               example: |
                 {
-                  "id": "6431d960adccf268a6734b23",
+                  "_id": "6431d960adccf268a6734b23",
                   "code": "miux4Ijkrypt1KG",
                   "status": true,
                   "title": "Updated Joystick",
@@ -126,7 +126,7 @@ paths:
       tags:
         - Products
       parameters:
-        - name: id
+        - name: pid
           in: path
           description: Product identifier
           required: true
@@ -141,7 +141,7 @@ paths:
                 $ref: "#/components/schemas/Product"
               example: |
                 {
-                  "id": "6431d960adccf268a6734b23",
+                  "_id": "6431d960adccf268a6734b23",
                   "code": "miux4Ijkrypt1KG",
                   "status": true,
                   "title": "Deleted Joystick",
@@ -161,8 +161,9 @@ components:
     Product:
       type: object
       properties:
-        id:
+        _id:
           type: string
+          format: ObjectId
         code:
           type: string
         status:
@@ -183,7 +184,7 @@ components:
           type: string
       example: |
         {
-          "id": "6431d960adccf268a6734b23",
+          "_id": "6431d960adccf268a6734b23",
           "code": "miux4Ijkrypt1KG",
           "status": true,
           "title": "Joystick PS5",

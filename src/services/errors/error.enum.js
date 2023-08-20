@@ -25,4 +25,5 @@ export const ErrorMessage = {
   USER_NOT_FOUND: "User not found",
   MISSING_PASSWORD: "Password required",
   SAME_PASSWORD: "New password can't be the same as old password",
+  PRODUCT_NOT_IN_CART: "Product is not in the cart",
 };

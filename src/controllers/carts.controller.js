@@ -147,12 +147,38 @@ class CartsController {
   async deleteProductFromCart(req, res, next) {
     try {
       const { cid, pid } = req.params;
+      if (!mongoose.Types.ObjectId.isValid(cid)) {
+        throw CustomError.createCustomError({
+          message: ErrorMessage.INVALID_CART_ID,
+          status: 400,
+        });
+      }
+      if (!mongoose.Types.ObjectId.isValid(pid)) {
+        throw CustomError.createCustomError({
+          message: ErrorMessage.INVALID_PRODUCT_ID,
+          status: 400,
+        });
+      }
+      const productId = await productsModel.findOne({ _id: pid });
+      if (!productId) {
+        CustomError.createCustomError({
+          message: ErrorMessage.PRODUCT_NOT_FOUND,
+          status: 404,
+        });
+      }
       const cart = await cartsService.findById(cid);
       if (!cart) {
         CustomError.createCustomError({
           message: ErrorMessage.CART_NOT_FOUND,
           status: 404,
           cause: error.message,
+        });
+      }
+      const productInCart = await cart.products.find(i => i._id === pid);
+      if (!productInCart) {
+        CustomError.createCustomError({
+          message: ErrorMessage.PRODUCT_NOT_IN_CART,
+          status: 404,
         });
       }
       const newCart = await cartsService.deleteProductFromCart(cid, pid);
@@ -193,6 +219,7 @@ class CartsController {
           logger.error(error);
         }
       });
+      console.log("result", result);
       res.status(200).json(result);
     } catch (error) {
       next(error);

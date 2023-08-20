@@ -1,0 +1,346 @@
+paths:
+  /api/carts:
+    post:
+      summary: Create a new cart
+      tags:
+        - Carts
+      responses:
+        "201":
+          description: Cart created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Cart"
+              example: |
+                {
+                  "id": "64dad376165c09890b8a3c7c",
+                  "products": []
+                }
+
+  /api/carts/{cid}:
+    get:
+      summary: Get a cart by id
+      tags:
+        - Carts
+      parameters:
+        - name: cid
+          in: path
+          description: Cart identifier
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Cart found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Cart"
+              example: |
+                {
+                  "_id": "64dad376165c09890b8a3c7c",
+                  "products": [
+                    {
+                      "product": "6431d960adccf268a6734b23",
+                      "quantity": 1
+                    },
+                    {
+                      "product": "6431d946adccf268a6734b21",
+                      "quantity": 2
+                    }
+                  ]
+                }
+        "400":
+          description: Invalid cart id
+        "404":
+          description: Cart not found
+    delete:
+      summary: Delete all products from a cart
+      tags:
+        - Carts
+      parameters:
+        - name: cid
+          in: path
+          description: Cart identifier
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Products deleted from cart
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Cart"
+              example: |
+                {
+                  "id": "64dad376165c09890b8a3c7c",
+                  "products": []
+                }
+        "400":
+          description: Invalid cart id
+        "404":
+          description: Cart not found
+  /api/carts/{cid}/product/{pid}:
+    post:
+      summary: Add or update product in cart
+      tags:
+        - Carts
+      parameters:
+        - name: cid
+          in: path
+          description: Cart identifier
+          required: true
+          schema:
+            type: string
+        - name: pid
+          in: path
+          description: Product identifier
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Product added to cart
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Cart"
+              example: |
+                {
+                  "_id": "64dad376165c09890b8a3c7c",
+                  "products": [
+                    {
+                      "product": "6431d960adccf268a6734b23",
+                      "quantity": 1
+                    },
+                    {
+                      "product": "6431d946adccf268a6734b21",
+                      "quantity": 3
+                    }
+                  ]
+                }
+        "400":
+          description: Invalid cart id or invalid product id
+        "404":
+          description: Product or cart not found
+    delete:
+      summary: Remove product from cart
+      tags:
+        - Carts
+      parameters:
+        - name: cid
+          in: path
+          description: Cart identifier
+          required: true
+          schema:
+            type: string
+        - name: pid
+          in: path
+          description: Product identifier
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Product removed
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Cart"
+              example: |
+                {
+                  "_id": "64dad376165c09890b8a3c7c",
+                  "products": [
+                    {
+                      "product": "6431d946adccf268a6734b21",
+                      "quantity": 3
+                    }
+                  ]
+                }
+        "400":
+          description: Invalid cart id or invalid product id
+        "404":
+          description: Product or cart not found, or product is not in the cart
+    put:
+      summary: Increase quantity or remove product from cart
+      tags:
+        - Carts
+      parameters:
+        - name: cid
+          in: path
+          description: Cart identifier
+          required: true
+          schema:
+            type: string
+        - name: pid
+          in: path
+          description: Product identifier
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Product removed or quantity decreased in cart
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Cart"
+              example: |
+                {
+                  "_id": "64dad376165c09890b8a3c7c",
+                  "products": [
+                    {
+                      "product": "6431d946adccf268a6734b21",
+                      "quantity": 2
+                    }
+                  ]
+                }
+        "400":
+          description: Invalid cart id or invalid product id
+        "404":
+          description: Product or cart not found, or product is not in the cart
+  /api/carts/{cid}/purchase:
+    post:
+      summary: Purchase products in cart
+      tags:
+        - Carts
+      parameters:
+        - name: cid
+          in: path
+          description: Cart identifier
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Products purchased from cart
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PurchaseResponse"
+              example: |
+                {
+                  "ticket": {
+                    "code": "ebGJFktA5KoXATz",
+                    "amount": 145000,
+                    "purchaser": "fschvi@gmail.com",
+                    "products": [
+                      {
+                        "product": "6431d960adccf268a6734b23",
+                        "quantity": 1
+                      },
+                      {
+                        "product": "6431d946adccf268a6734b21",
+                        "quantity": 2
+                      }
+                    ],
+                    "_id": "64e283b4554380ec325edec1",
+                    "purchase_datetime": "2023-08-20T21:20:52.934Z",
+                    "__v": 0
+                  },
+                  "productsWithoutStock": []
+                }
+        "400":
+          description: Invalid cart id
+        "404":
+          description: Cart not found
+components:
+  schemas:
+    Cart:
+      type: object
+      properties:
+        _id:
+          type: string
+          format: ObjectId
+        products:
+          type: array
+          items:
+            type: object
+            properties:
+              product:
+                type: string
+                format: ObjectId
+              quantity:
+                type: number
+            required:
+              - product
+              - quantity
+      example: |
+        {
+          "_id": "64dad376165c09890b8a3c7c",
+          "products": [
+            {
+              "product": "6431d960adccf268a6734b23",
+              "quantity": 1
+            },
+            {
+              "product": "6431d946adccf268a6734b21",
+              "quantity": 2
+            }
+          ]
+        }
+    Ticket:
+      type: object
+      properties:
+        _id:
+          type: string
+          format: ObjectId
+        code:
+          type: string
+        purchase_datetime:
+          type: string
+          format: date-time
+        amount:
+          type: number
+        purchaser:
+          type: string
+        products:
+          type: array
+          items:
+            type: object
+            properties:
+              product:
+                type: string
+                format: ObjectId
+              quantity:
+                type: number
+            required:
+              - product
+              - quantity
+        productsWithoutStock:
+          type: array
+          description: Products without stock at the time of purchase
+          items:
+            type: object
+            properties:
+              product:
+                type: string
+                format: ObjectId
+            required: true
+      example: |
+        {
+          "_id": "64dffc23862d9ca2d0eb7422"
+          "code": "TICKET123",
+          "purchase_datetime": "2023-08-20T12:00:00Z",
+          "amount": 100,
+          "purchaser": "user123",
+          "products": [
+            {
+              "product": "6431d960adccf268a6734b23",
+              "quantity": 1
+            },
+            {
+              "product": "6431d946adccf268a6734b21",
+              "quantity": 2
+            }
+          ]
+          productsWithoutStock: [
+            {
+              "product": "6131d960dfhjf268a6734b29"
+            },
+            {
+              "product": "h8et68rwrccf268a673qfg1"
+            }
+          ]
+        }

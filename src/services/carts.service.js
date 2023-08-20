@@ -60,7 +60,6 @@ class CartsService {
             quantity: cartProduct.quantity,
           };
           productsForTicket.push(productItem);
-          console.log("PFT", productsForTicket);
         } else {
           productsWithoutStock.push(product._id.toString());
         }
@@ -76,9 +75,7 @@ class CartsService {
         purchaser: user.email,
         products: productsForTicket,
       };
-      console.log("cleanTicket", cleanTicket);
       const ticket = await ticketManager.createTicket(cleanTicket);
-      console.log("ticket", ticket);
       return { ticket, productsWithoutStock };
     } catch (error) {
       return error;
