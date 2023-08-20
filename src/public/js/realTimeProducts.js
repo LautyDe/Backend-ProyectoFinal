@@ -1,4 +1,6 @@
 const socketClient = io();
+const productOwner = owner.value;
+console.log(productOwner);
 
 socketClient.on("products", data => {
   render(data);
@@ -7,6 +9,8 @@ socketClient.on("products", data => {
 function render(data) {
   const html = data
     .map(item => {
+      const deleteButtonVisibility =
+        item.owner === productOwner ? "block" : "none";
       return `<div class="product">
       <div>${item.title}</div>
       <div>${item.description}</div>
@@ -19,7 +23,7 @@ function render(data) {
       <div>${item.stock}</div>
       <input type="button" value="Delete product 😭" onclick="deleteProduct('${
         item._id
-      }')"></input>
+      }')" style="display: ${deleteButtonVisibility}"></input>
       </div>
       `;
     })
