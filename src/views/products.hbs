@@ -52,6 +52,7 @@
         <h4>Price: {{price}}</h4>
         <img src="{{thumbnail}}" />
         {{#unless ../isAdmin}}
+        {{#unless ownProduct}}
         <div class="buttons">
           <button
             onclick="deleteProduct('{{../cartId}}','{{_id}}')"
@@ -62,6 +63,7 @@
             class="plusButton"
           >+</button>
         </div>
+        {{/unless}}
         {{/unless}}
       </div>
     {{/each}}

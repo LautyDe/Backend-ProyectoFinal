@@ -92,6 +92,7 @@ class ViewsController {
       const productsToString = products.map(product => ({
         ...product,
         _id: product._id.toString(),
+        ownProduct: product.owner === req.user.email,
       }));
       const userName = req.user.name;
       const renderData = {
