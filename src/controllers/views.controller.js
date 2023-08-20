@@ -115,6 +115,7 @@ class ViewsController {
         style: "realTimeProducts.css",
         title: "Real Time Products",
         products: products,
+        owner: req.user.email,
       };
       res.render("realTimeProducts", renderData);
     } catch (error) {
