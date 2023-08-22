@@ -22,6 +22,7 @@ import mongoStore from "connect-mongo";
 import passport from "passport";
 import "./src/strategies/index.strategies.js";
 import { logger } from "./src/utils/winston.js";
+import { authMiddleware } from "./src/middlewares/auth.middleware.js";
 
 const app = express();
 const PORT = config.port;

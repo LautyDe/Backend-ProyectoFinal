@@ -40,6 +40,28 @@ class UsersController {
       next(error);
     }
   }
+
+  async uploadFiles(req, res, next) {
+    try {
+      if (!req.files || req.files.length === 0) {
+        CustomError.createCustomError({
+          message: "Could not save documents",
+          status: 400,
+        });
+      }
+      const { uid } = req.params;
+      const user = await usersManager.findById(uid);
+      const newDocuments = req.files.map(file => ({
+        name: file.originalname,
+        reference: file.path,
+      }));
+      user.documents = [...user.documents, ...newDocuments];
+      await user.save();
+      res.send({ message: "Files saved" });
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 /* ok: 200

@@ -2,6 +2,7 @@ import { Router } from "express";
 import passport from "passport";
 import { recoveryController } from "../../controllers/recovery.controller.js";
 import { usersController } from "../../controllers/users.controller.js";
+import { uploader } from "../../utils/multer.js";
 
 const router = Router();
 
@@ -40,5 +41,10 @@ router.get("/changePassPage", recoveryController.changePassPage);
 router.post("/recover", recoveryController.recover);
 router.post("/changePass", recoveryController.changePass);
 router.get("/premium/:uid", usersController.togglePremium);
+router.post(
+  "/premium/:uid/documents",
+  uploader.array("files"),
+  usersController.uploadFiles
+);
 
 export default router;
