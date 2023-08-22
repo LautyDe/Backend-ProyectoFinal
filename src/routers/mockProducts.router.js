@@ -1,12 +1,12 @@
 import { Router } from "express";
-import { generateProduct } from "../mock/mockProducts.test.js";
+import { generateDBProduct } from "../mock/mockProducts.test.js";
 
 const router = Router();
 
 router.get("/", (req, res) => {
   const products = [];
   for (let i = 0; i < 100; i++) {
-    const productsMock = generateProduct();
+    const productsMock = generateDBProduct();
     products.push(productsMock);
   }
   res.json(products);

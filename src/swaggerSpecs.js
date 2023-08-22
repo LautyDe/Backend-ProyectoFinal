@@ -1,5 +1,5 @@
 import swaggerJSDoc from "swagger-jsdoc";
-import { __dirname } from "./src/utils.js";
+import { __dirname } from "./utils.js";
 
 const swaggerOptions = {
   definition: {

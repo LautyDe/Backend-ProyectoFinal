@@ -2,7 +2,6 @@ import { dirname } from "path";
 import { fileURLToPath } from "url";
 import bcrypt from "bcrypt";
 import config from "./config.js";
-import { cartsService } from "./services/carts.service.js";
 import CustomError from "./services/errors/CustomError.js";
 import { ErrorMessage } from "./services/errors/error.enum.js";
 
@@ -34,13 +33,14 @@ export const paramsValidator = async product => {
     product.stock &&
     product.category &&
     !product.id &&
-    !product.code
+    !product.code &&
+    !product.status
   ) {
     return product;
   } else {
     if (!product.title) {
       throw CustomError.createCustomError({
-        message: ErrorMessage.INTERNAL_SERVER_ERROR,
+        message: "Falta el title del producto.",
         status: 400,
       });
     } else if (!product.description) {
@@ -63,7 +63,7 @@ export const paramsValidator = async product => {
         message: "Falta la categoria del producto.",
         status: 400,
       });
-    } else if (product.id) {
+    } else if (product.id || product._id) {
       throw CustomError.createCustomError({
         message: "El producto no se debe cargar con el id.",
         status: 400,
@@ -71,6 +71,11 @@ export const paramsValidator = async product => {
     } else if (product.code) {
       throw CustomError.createCustomError({
         message: "El producto no se debe cargar con el code.",
+        status: 400,
+      });
+    } else if (product.status) {
+      throw CustomError.createCustomError({
+        message: "El producto no se debe cargar con el status.",
         status: 400,
       });
     }
@@ -97,7 +102,7 @@ export const lessThanOneHour = timestamp => {
 };
 
 export const resetPasswordLink = userId => {
-  const baseUrl = "http://localhost:8080/users";
+  const baseUrl = "http://localhost:8080/api/users";
   const token = encodeURIComponent(
     Buffer.from(new Date().getTime().toString()).toString("base64")
   );

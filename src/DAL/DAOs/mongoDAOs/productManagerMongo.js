@@ -47,7 +47,11 @@ class ProductManager {
   }
 
   async updateProduct(id, product) {
-    const response = await productsModel.findOneAndUpdate({ _id: id }, product);
+    const response = await productsModel.findOneAndUpdate(
+      { _id: id },
+      product,
+      { new: true }
+    );
     return response;
   }
 

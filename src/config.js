@@ -4,6 +4,7 @@ dotenv.config();
 
 export default {
   mongo_uri: process.env.MONGO_URI,
+  mongo_uri_test: process.env.MONGO_URI_TEST,
   port: process.env.PORT,
   secret_password: process.env.SECRET_PASSWORD,
   secret_cookie: process.env.SECRET_COOKIE,

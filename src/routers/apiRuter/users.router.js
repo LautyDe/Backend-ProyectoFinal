@@ -1,7 +1,7 @@
 import { Router } from "express";
 import passport from "passport";
-import { recoveryController } from "../controllers/recovery.controller.js";
-import { usersController } from "../controllers/users.controller.js";
+import { recoveryController } from "../../controllers/recovery.controller.js";
+import { usersController } from "../../controllers/users.controller.js";
 
 const router = Router();
 
