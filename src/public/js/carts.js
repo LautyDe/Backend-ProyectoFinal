@@ -5,23 +5,7 @@ cartTable?.addEventListener("click", async e => {
   const cartId = cartTable.getAttribute("data-cart-id");
   const element = e.target;
   const productId = element.getAttribute("data-product-id");
-  if (element.className === "delete") {
-    try {
-      const response = await fetch(
-        `/api/carts/${cartId}/product/${productId}`,
-        {
-          method: "DELETE",
-        }
-      );
-      if (response.ok) {
-        document.location.reload();
-      } else {
-        alert("Error removing product from the cart");
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  } else if (element.className === "increase") {
+  if (element.className === "increase") {
     try {
       const quantity = parseInt(element.getAttribute("data-quantity"));
       const stock = parseInt(element.getAttribute("data-stock"));
@@ -43,13 +27,21 @@ cartTable?.addEventListener("click", async e => {
         alert("Error increasing quantity");
       }
     } catch (error) {
-      console.error(error);
+      next(error);
     }
   } else if (element.className === "decrease") {
     try {
       const quantity = parseInt(element.getAttribute("data-quantity"));
-      if (quantity - 1 <= 0) {
-        return;
+      if (quantity - 1 === 0) {
+        const response = await fetch(
+          `/api/carts/${cartId}/product/${productId}`,
+          {
+            method: "DELETE",
+          }
+        );
+        if (response.ok) {
+          document.location.reload();
+        }
       }
       const response = await fetch(
         `/api/carts/${cartId}/product/${productId}`,
@@ -65,7 +57,7 @@ cartTable?.addEventListener("click", async e => {
         alert("Error decreasing quantity");
       }
     } catch (error) {
-      console.error(error);
+      next(error);
     }
   } else if (element.className === "purchase") {
     try {
@@ -79,7 +71,7 @@ cartTable?.addEventListener("click", async e => {
         alert("Error completing purchase");
       }
     } catch (error) {
-      console.error(error);
+      next(error);
     }
   }
 });
