@@ -31,6 +31,37 @@ function render(data) {
   document.getElementById("productsContainer").innerHTML = html;
 }
 
+function deleteProduct(id) {
+  socketClient.emit("deleteProduct", { id, userEmail: user });
+}
+
+function addProduct() {
+  const price = document.getElementById("price").value;
+  const stock = document.getElementById("stock").value;
+  const productOwner = document.getElementById("owner").value;
+  const userRole = document.getElementById("role").value;
+  const product = {
+    title: document.getElementById("title").value,
+    description: document.getElementById("description").value,
+    price: parseInt(price),
+    thumbnail: document.getElementById("thumbnail").value,
+    category: document.getElementById("category").value,
+    stock: parseInt(stock),
+    owner: productOwner,
+    role: userRole,
+  };
+  try {
+    const productOk = paramsValidator(product);
+    if (productOk) {
+      socketClient.emit("newProduct", product);
+      const form = document.getElementById("formAddProduct");
+      form.reset();
+    }
+  } catch (error) {
+    alert(error);
+  }
+}
+
 function paramsValidator(product) {
   if (
     product.title &&
@@ -53,28 +84,4 @@ function paramsValidator(product) {
       throw new Error(`Falta la categoria del producto.`);
     }
   }
-}
-
-function addProduct() {
-  const price = document.getElementById("price").value;
-  const stock = document.getElementById("stock").value;
-  const productOwner = document.getElementById("owner").value;
-  const userRole = document.getElementById("role").value;
-  const product = {
-    title: document.getElementById("title").value,
-    description: document.getElementById("description").value,
-    price: parseInt(price),
-    thumbnail: document.getElementById("thumbnail").value,
-    category: document.getElementById("category").value,
-    stock: parseInt(stock),
-    owner: productOwner,
-    role: userRole,
-  };
-  socketClient.emit("newProduct", product);
-  const form = document.getElementById("formAddProduct");
-  form.reset();
-}
-
-function deleteProduct(id) {
-  socketClient.emit("deleteProduct", id);
 }

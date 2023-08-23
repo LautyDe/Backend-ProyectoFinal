@@ -15,6 +15,7 @@ import { chatService } from "./src/services/chat.service.js";
 import { cartsService } from "./src/services/carts.service.js";
 import { errorMiddleware } from "./src/services/errors/error.middleware.js";
 import { swaggerSetup } from "./src/swaggerSpecs.js";
+import { transporter } from "./src/utils/nodemailer.js";
 //db
 import "./src/DAL/mongoDb/dbConfig.js";
 import mongoStore from "connect-mongo";
@@ -22,7 +23,7 @@ import mongoStore from "connect-mongo";
 import passport from "passport";
 import "./src/strategies/index.strategies.js";
 import { logger } from "./src/utils/winston.js";
-import { authMiddleware } from "./src/middlewares/auth.middleware.js";
+import { usersManager } from "./src/DAL/DAOs/mongoDAOs/usersManagerMongo.js";
 
 const app = express();
 const PORT = config.port;
@@ -97,8 +98,22 @@ socketServer.on("connection", async socket => {
     socket.emit("products", products);
   });
 
-  socket.on("deleteProduct", async id => {
+  socket.on("deleteProduct", async ({ id, userEmail }) => {
     await productsService.deleteById(id);
+    const user = await usersManager.findByEmail(userEmail);
+    if (user.role === config.role_admin) {
+      const mail = {
+        from: "lauty.d.p@gmail.com",
+        to: userEmail,
+        subject: "Product deleted",
+        text: `${user.name} your product with id: ${id} was succesfully removed from the home page`,
+      };
+      transporter.sendMail(mail, (error, info) => {
+        if (error) {
+          logger.error(error);
+        }
+      });
+    }
     const products = await productsService.findAll();
     socket.emit("products", products);
   });
@@ -112,12 +127,12 @@ socketServer.on("connection", async socket => {
   });
 
   socket.on("addToCart", async ({ cid, pid }) => {
-    const addToCart = await cartsService.addToCart(cid, pid);
+    await cartsService.addToCart(cid, pid);
     socket.emit("addedToCart", { message: "Producto agregado al carrito" });
   });
 
   socket.on("deleteFromCart", async ({ cid, pid }) => {
-    const deleteFromCart = await cartsService.deleteProduct(cid, pid);
+    await cartsService.deleteProduct(cid, pid);
     socket.emit("deletedFromCart", {
       message: "Producto eliminado del carrito",
     });

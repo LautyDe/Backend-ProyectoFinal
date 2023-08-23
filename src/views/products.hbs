@@ -52,7 +52,7 @@
 <h1>Welcome {{userName}} to our products! 😎</h1>
 
 {{#if products.length}}
-  <section class="productsContainer">
+  <section class="productsContainer" id="productsContainer">
     {{#each products}}
       <div class="productsCard">
         <h3>Title: {{title}}</h3>
@@ -63,11 +63,11 @@
         {{#unless ownProduct}}
         <div class="buttons">
           <button
-            onclick="deleteProduct('{{../cartId}}','{{_id}}')"
+            onclick="deleteProduct('{{../cartId}}','{{_id}}', '{{user._id}}')"
             class="minusButton"
           >-</button>
           <button
-            onclick="addProduct('{{../cartId}}','{{_id}}')"
+            onclick="addProduct('{{../cartId}}','{{_id}}', '{{user._id}}')"
             class="plusButton"
           >+</button>
         </div>

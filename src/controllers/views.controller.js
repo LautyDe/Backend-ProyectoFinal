@@ -96,12 +96,13 @@ class ViewsController {
         _id: product._id.toString(),
         ownProduct: product.owner === req.user.email,
       }));
-      const userName = req.user.name;
+      const user = req.user;
       const renderData = {
         style: "products.css",
         title: "Products",
         products: productsToString,
-        userName: userName,
+        userName: user.name,
+        user,
         cartId: usersCartId,
         ...buildUserData(res),
       };
@@ -120,6 +121,7 @@ class ViewsController {
         products: products,
         owner: req.user.email,
         role: req.user.role,
+        userId: req.user._id,
       };
       res.render("realTimeProducts", renderData);
     } catch (error) {
