@@ -3,6 +3,8 @@ import { chatService } from "../services/chat.service.js";
 import { cartsService } from "../services/carts.service.js";
 import CustomError from "../services/errors/CustomError.js";
 import { ErrorMessage } from "../services/errors/error.enum.js";
+import { usersManager } from "../DAL/DAOs/mongoDAOs/usersManagerMongo.js";
+import config from "../config.js";
 
 /* ok: 200
    created: 201
@@ -120,6 +122,23 @@ class ViewsController {
         role: req.user.role,
       };
       res.render("realTimeProducts", renderData);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async users(req, res, next) {
+    try {
+      const allUsers = await usersManager.getAllUsers();
+      const usersWithoutAdmin = allUsers.filter(
+        user => user.role !== config.role_admin
+      );
+      const renderData = {
+        style: "users.css",
+        users: usersWithoutAdmin,
+        ...buildUserData(res),
+      };
+      res.render("users", renderData);
     } catch (error) {
       next(error);
     }

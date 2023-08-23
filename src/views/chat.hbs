@@ -2,7 +2,7 @@
   <navbar>
     <div style="background-color: black; padding: 10px 0px">
       <ul
-            style="list-style: none; display: flex; justify-content: space-between"
+        style="list-style: none; display: flex; justify-content: space-between"
       >
         <li style="padding: 0 5%;">
           <a
@@ -25,11 +25,19 @@
           >Chat</a>
         </li>
         <li style="padding: 0 5%;">
-          <a
-            style="color: white; text-decoration: none; font-weight: bold; display: flex"
-            href="/carts"
-          >Cart</a>
-        </li>
+              <a
+                style="color: white; text-decoration: none; font-weight: bold; display: flex"
+                href="/carts"
+              >Cart</a>
+            </li>
+            {{#if isAdmin}}
+            <li style="padding: 0 5%;">
+              <a
+                style="color: white; text-decoration: none; font-weight: bold; display: flex"
+                href="/users"
+              >Users</a>
+            </li>
+            {{/if}}
         <li style="padding: 0 5%;">
           <a
             style="color: white; text-decoration: none; font-weight: bold"

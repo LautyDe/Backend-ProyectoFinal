@@ -49,67 +49,42 @@
   </navbar>
 </header>
 
-{{#if products.length}}
-  <h1>Welcome to your cart 🛒</h1>
+<h1>Users list (only for admin 🤐)</h1>
 
-  <table
-    class="table"
-    id="table"
-    cellPadding="10"
-    border="1"
-    align="center"
-    data-cart-id="{{cartId}}"
-  >
-    <thead>
+{{#if users.length}}
+  <table class="users">
+    <tr>
+      <th>PRUEBA</th>
+      <th>PRUEBA</th>
+      <th>PRUEBA</th>
+      <th>PRUEBA</th>
+      <th>PRUEBA</th>
+      <th>PRUEBA</th>
+    </tr>
+    {{#each users}}
       <tr>
-        <th>Product Name</th>
-        <th>Quantity</th>
-        <th>Price</th>
-        <th>Stock</th>
-        <th>Increase</th>
-        <th>Decrease</th>
-        <th>Delete</th>
+        <td>{{this.name}}</td>
+        <td>{{this.email}}</td>
+        <td>{{this.last_connection}}</td>
+        <td>{{this.role}}</td>
+        <td><input
+            type="button"
+            value="Change role 👀"
+            onclick="deleteProduct('{{this._id}}')"
+            style="display: {{deleteButtonVisibility}};"
+          /></td>
+        <td><input
+            type="button"
+            value="Delete user ☠️"
+            onclick="deleteProduct('{{this._id}}')"
+            style="display: {{deleteButtonVisibility}};"
+          /></td>
       </tr>
-    </thead>
-    <tbody id="cartTable">
-      {{#each products}}
-        <tr>
-          <td>{{title}}</td>
-          <td>{{quantity}}</td>
-          <td>{{price}}</td>
-          <td>{{stock}}</td>
-          <td align="center"><button
-              class="increase"
-              data-product-id="{{productId}}"
-              data-quantity="{{quantity}}"
-              data-stock="{{stock}}"
-            >+</button></td>
-          <td align="center"><button
-              class="decrease"
-              data-product-id="{{productId}}"
-              data-quantity="{{quantity}}"
-            >-</button></td>
-          <td align="center"><button
-              class="delete"
-              data-product-id="{{productId}}"
-            >Delete</button></td>
-        </tr>
-      {{/each}}
-    </tbody>
-    <tfoot>
-      <tr>
-        <td colspan="5" align="center">
-          <b>Cart Total $</b>
-          {{cartTotal}}
-        </td>
-        <td colspan="2" align="center">
-          <button class="purchase">Purchase</button>
-        </td>
-      </tr>
-    </tfoot>
+    {{/each}}
   </table>
 {{else}}
-  <h2>Your cart is empty</h2>
+  <h1>Error en la carga de usuarios</h1>
 {{/if}}
 
-<script src="/js/carts.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/users.js"></script>

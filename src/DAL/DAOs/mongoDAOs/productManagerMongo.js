@@ -7,7 +7,7 @@ class ProductManager {
   }
 
   async getAll() {
-    const allProducts = await productsModel.find().lean(); //leer lean()
+    const allProducts = await productsModel.find().lean();
     return allProducts;
   }
 

@@ -21,7 +21,7 @@ class UsersManager {
 
   async getAllUsers() {
     try {
-      const allUsers = await usersModel.find();
+      const allUsers = await usersModel.find().lean();
       return allUsers;
     } catch (error) {
       next(error);

@@ -30,6 +30,14 @@
                 href="/carts"
               >Cart</a>
             </li>
+            {{#if isAdmin}}
+            <li style="padding: 0 5%;">
+              <a
+                style="color: white; text-decoration: none; font-weight: bold; display: flex"
+                href="/users"
+              >Users</a>
+            </li>
+            {{/if}}
         <li style="padding: 0 5%;">
           <a
             style="color: white; text-decoration: none; font-weight: bold"

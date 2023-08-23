@@ -40,6 +40,14 @@ router.get(
   authMiddleware.authPremium,
   viewsController.carts
 );
+
+router.get(
+  "/users",
+  authMiddleware.sessionExpired,
+  authMiddleware.authAdmin,
+  viewsController.users
+);
+
 router.get("/recoverPage", recoveryController.recoverPage);
 router.get("/changePassPage", recoveryController.changePassPage);
 router.get("/sessionExpired", viewsController.sessionExpired);
