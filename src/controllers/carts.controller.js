@@ -1,3 +1,4 @@
+import { cartManager } from "../DAL/DAOs/mongoDAOs/cartManagerMongo.js";
 import { cartsModel } from "../DAL/mongoDb/models/carts.model.js";
 import { productsModel } from "../DAL/mongoDb/models/products.model.js";
 import { cartsService } from "../services/carts.service.js";
@@ -21,6 +22,14 @@ class CartsController {
     try {
       const cart = await cartsService.createOne();
       res.status(201).json(cart);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async deleteCart(id) {
+    try {
+      const deletedCart = await cartManager.deleteCart(id);
     } catch (error) {
       next(error);
     }

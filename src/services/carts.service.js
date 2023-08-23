@@ -17,6 +17,11 @@ class CartsService {
     return response;
   }
 
+  async deleteCart(id) {
+    const response = cartManager.deleteCart(id);
+    return response;
+  }
+
   async addToCart(cid, pid) {
     const response = await cartManager.addToCart(cid, pid);
     return response;

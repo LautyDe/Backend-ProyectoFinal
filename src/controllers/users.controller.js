@@ -1,3 +1,4 @@
+import { cartManager } from "../DAL/DAOs/mongoDAOs/cartManagerMongo.js";
 import { usersManager } from "../DAL/DAOs/mongoDAOs/usersManagerMongo.js";
 import config from "../config.js";
 import CustomError from "../services/errors/CustomError.js";
@@ -35,6 +36,9 @@ class UsersController {
   async deleteUser(req, res, next) {
     try {
       const { uid } = req.params;
+      const user = await usersManager.findById(uid);
+      const usersCart = user.cart;
+      const cart = await cartManager.deleteCart(usersCart);
       const userDeleted = await usersManager.deleteUser(uid);
       res.json(userDeleted);
     } catch (error) {

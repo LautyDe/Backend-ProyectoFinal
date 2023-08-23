@@ -6,6 +6,11 @@ export default class CartManager {
     return cart;
   }
 
+  async deleteCart(id) {
+    const deletedCart = await cartsModel.findOneAndDelete({ _id: id });
+    return deletedCart;
+  }
+
   async getById(id) {
     const cart = await cartsModel
       .findOne({ _id: id })

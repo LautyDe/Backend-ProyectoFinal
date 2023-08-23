@@ -86,6 +86,7 @@ describe("Testing de endpoints de Carts", function () {
 describe("Testing de endpoints de Users y Sessions", function () {
   let registerUser;
   let loginUser;
+  let userDb;
   before(async function () {
     registerUser = await request
       .post("/api/users/register")
