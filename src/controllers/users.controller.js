@@ -4,7 +4,34 @@ import CustomError from "../services/errors/CustomError.js";
 import { ErrorMessage } from "../services/errors/error.enum.js";
 import mongoose from "mongoose";
 
+/* ok: 200
+created: 201
+   no content: 204
+   bad request: 400
+   forbidden: 403
+   not found: 404
+   internal server error: 500
+    */
+
 class UsersController {
+  async getAllUsers(req, res, next) {
+    try {
+      const users = await usersManager.getAllUsers();
+      res.json(users);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async deleteInactives(req, res, next) {
+    try {
+      const inactiveUsers = await usersManager.deleteInactiveUsers();
+      res.json(inactiveUsers);
+    } catch (error) {
+      next(error);
+    }
+  }
+
   async togglePremium(req, res, next) {
     try {
       const { uid } = req.params;
@@ -63,14 +90,5 @@ class UsersController {
     }
   }
 }
-
-/* ok: 200
-   created: 201
-   no content: 204
-   bad request: 400
-   forbidden: 403
-   not found: 404
-   internal server error: 500
-    */
 
 export const usersController = new UsersController();

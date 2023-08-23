@@ -35,16 +35,19 @@ router.get("/github", passport.authenticate("github"), (req, res) => {
   res.redirect("/products");
 });
 
-//recover
-router.get("/recoverPage", recoveryController.recoverPage);
-router.get("/changePassPage", recoveryController.changePassPage);
-router.post("/recover", recoveryController.recover);
-router.post("/changePass", recoveryController.changePass);
+//users
+router.get("/", usersController.getAllUsers);
+router.delete("/", usersController.deleteInactives);
 router.get("/premium/:uid", usersController.togglePremium);
 router.post(
   "/premium/:uid/documents",
   uploader.array("files"),
   usersController.uploadFiles
 );
+//recover
+router.get("/recoverPage", recoveryController.recoverPage);
+router.get("/changePassPage", recoveryController.changePassPage);
+router.post("/recover", recoveryController.recover);
+router.post("/changePass", recoveryController.changePass);
 
 export default router;

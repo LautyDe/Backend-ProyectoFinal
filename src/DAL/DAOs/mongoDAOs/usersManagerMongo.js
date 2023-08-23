@@ -1,3 +1,5 @@
+import CustomError from "../../../services/errors/CustomError.js";
+import { ErrorMessage } from "../../../services/errors/error.enum.js";
 import { compareData } from "../../../utils.js";
 import { usersModel } from "../../mongoDb/models/users.model.js";
 
@@ -17,6 +19,24 @@ class UsersManager {
     }
   }
 
+  async getAllUsers() {
+    try {
+      const allUsers = await usersModel.find();
+      return allUsers;
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async deleteInactiveUsers() {
+    const cutOffTime = new Date();
+    cutOffTime.setHours(cutOffTime.getHours() - 48); //setMinutes(cutoffTime.getMinutes() - 2);
+    const inactiveUsers = await usersModel.deleteMany({
+      last_connection: { $lt: cutOffTime },
+    });
+    return inactiveUsers;
+  }
+
   async loginUser(email, password) {
     try {
       const user = await usersModel.findOne({ email });
@@ -31,10 +51,13 @@ class UsersManager {
       if (user) {
         return user;
       } else {
-        throw new Error(`Usuario o contraseña invalidos.`);
+        CustomError.createCustomError({
+          message: ErrorMessage.WRONG_LOGIN,
+          status: 400,
+        });
       }
     } catch (error) {
-      console.log(`Error en el login: ${error.message}`);
+      next(error);
     }
   }
 
