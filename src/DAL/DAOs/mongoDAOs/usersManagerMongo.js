@@ -70,6 +70,11 @@ class UsersManager {
     const response = await usersModel.findOne({ _id: id });
     return response;
   }
+
+  async deleteUser(id) {
+    const response = await usersModel.deleteOne({ _id: id });
+    return response;
+  }
 }
 
 export const usersManager = new UsersManager();

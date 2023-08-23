@@ -38,7 +38,9 @@ router.get("/github", passport.authenticate("github"), (req, res) => {
 //users
 router.get("/", usersController.getAllUsers);
 router.delete("/", usersController.deleteInactives);
+router.delete("/:uid", usersController.deleteUser);
 router.get("/premium/:uid", usersController.togglePremium);
+
 router.post(
   "/premium/:uid/documents",
   uploader.array("files"),

@@ -32,6 +32,16 @@ class UsersController {
     }
   }
 
+  async deleteUser(req, res, next) {
+    try {
+      const { uid } = req.params;
+      const userDeleted = await usersManager.deleteUser(uid);
+      res.json(userDeleted);
+    } catch (error) {
+      next(error);
+    }
+  }
+
   async togglePremium(req, res, next) {
     try {
       const { uid } = req.params;
