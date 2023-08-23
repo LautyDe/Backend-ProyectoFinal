@@ -50,6 +50,11 @@
 </header>
 
 <h1>Users list (only for admin 🤐)</h1>
+<div><input
+    type="button"
+    value="Delete inactive (48 hours) users ⚰️"
+    onclick="deleteInactiveUsers()"
+  /></div>
 
 {{#if users.length}}
   <table class="users" id="users">
@@ -82,5 +87,4 @@
   <h1>Error en la carga de usuarios</h1>
 {{/if}}
 
-<script src="/socket.io/socket.io.js"></script>
 <script src="/js/users.js"></script>

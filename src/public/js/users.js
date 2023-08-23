@@ -1,4 +1,17 @@
-const cartTable = document.getElementById("users");
+async function deleteInactiveUsers() {
+  try {
+    const response = await fetch(`/api/users`, {
+      method: "DELETE",
+    });
+    if (response.ok) {
+      document.location.reload();
+    } else {
+      alert("Error removing inactive users");
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 async function changeRole(id) {
   try {

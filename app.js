@@ -101,7 +101,7 @@ socketServer.on("connection", async socket => {
   socket.on("deleteProduct", async ({ id, userEmail }) => {
     await productsService.deleteById(id);
     const user = await usersManager.findByEmail(userEmail);
-    if (user.role === config.role_admin) {
+    if (user.role === config.role_premium) {
       const mail = {
         from: "lauty.d.p@gmail.com",
         to: userEmail,
