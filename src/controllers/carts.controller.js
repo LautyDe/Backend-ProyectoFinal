@@ -228,7 +228,6 @@ class CartsController {
           logger.error(error);
         }
       });
-      console.log("result", result);
       res.status(200).json(result);
     } catch (error) {
       next(error);
